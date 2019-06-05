@@ -1,5 +1,72 @@
 {
   "$schema": "http://json.schemastore.org/renovate",
-  "extends": ["github>sourcegraph/renovate-config"],
-  "semanticCommits": false
+  "extends": ["config:base"],
+  "timezone": "America/Los_Angeles",
+  "schedule": ["on the 1st through 7th day of the month"],
+  "prBodyDefinitions": {
+    "Sourcegraph": "REDACTED"
+  },
+  "prBodyColumns": ["Package", "Type", "Update", "New value", "References", "Sourcegraph"],
+  "masterIssue": true,
+  "updateNotScheduled": true,
+  "prCreation": "immediate",
+  "prHourlyLimit": 10,
+  "prConcurrentLimit": 50,
+  "rangeStrategy": "bump",
+  "postUpdateOptions": ["yarnDedupeFewer"],
+  "assignees": ["felixfbecker"],
+  "golang": {
+    "assignees": ["slimsag"],
+    "masterIssueApproval": true
+  },
+  "docker": {
+    "assignees": [],
+    "pinDigests": true
+  },
+  "packageRules": [
+    {
+      "packagePatterns": ["^@sourcegraph/"],
+      "rangeStrategy": "bump",
+      "schedule": []
+    },
+    {
+      "packageNames": ["sourcegraph"],
+      "rangeStrategy": "bump",
+      "schedule": [],
+      "automerge": true
+    },
+    {
+      "packagePatterns": ["^@types/"],
+      "rangeStrategy": "pin",
+      "assignees": [],
+      "automerge": true
+    },
+    {
+      "packageNames": ["@sourcegraph/codeintellify"],
+      "assignees": ["felixfbecker", "ijsnow"]
+    },
+    {
+      "packageNames": ["@sourcegraph/basic-code-intel"],
+      "assignees": ["chrismwendt"]
+    },
+    {
+      "packagePatterns": ["^golang.org/x/"],
+      "masterIssueApproval": false,
+      "assignees": [],
+      "automerge": true
+    },
+    {
+      "packagePatterns": ["prettier"],
+      "groupName": "prettier"
+    },
+    {
+      "packagePatterns": ["prettier", "lint", "^@sourcegraph/tsconfig$"],
+      "depTypeList": ["devDependencies"],
+      "automerge": true
+    },
+    {
+      "packagePatterns": ["^vscode-"],
+      "groupName": "vscode"
+    }
+  ]
 }
